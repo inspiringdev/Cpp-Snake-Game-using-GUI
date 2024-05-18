@@ -1,6 +1,6 @@
 # C++ Snake game using GUI
 
-For my semester 1 final programming project, I chose to delve into the timeless realm of game development by crafting a classic Snake game using C++. Drawing inspiration from the provided source file, I embarked on a journey to expand upon its foundation, aiming to create a polished and immersive gaming experience while honing my programming skills.
+For my first semester programming project, I chose to delve into the timeless realm of game development by crafting a classic Snake game using C++. Drawing inspiration from the provided source file, I embarked on a journey to expand upon its foundation, aiming to create a polished and immersive gaming experience while honing my programming skills.
 
 
 **Project Vision:**
