@@ -1,0 +1,253 @@
+#include <conio.h>
+#include <vector>
+#include <graphics.h>
+#include <dos.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+using namespace std;
+
+int snakeLength = 2;
+int maxLength = 2; // It controls snake's length
+
+int snakeX = 30;
+int snakeY = 170; // It determines the snake's location
+
+char direction = '-';
+char lastDirection = '-'; // It determines the snakes direction
+
+bool isPlaying = true; // It will determine whether you are alive
+
+int fruitX;
+int fruitY;
+bool hasEaten = false; // It will determine the fruit position
+
+vector<int> tailX;
+vector<int> tailY; // It will determine where your tail needs to go
+
+int tailIndex = 1;
+int maxTailIndex = 0; // It is for some basic for() things
+
+char playerScore[50];
+int score = 0; // This will change according to your score
+
+void startGame();
+void updateGame(); 
+void moveSnake();
+void generateFruit();
+void renderGraphics();	
+
+int main()
+{
+    startGame();
+
+    while (isPlaying == true)
+    {
+        updateGame();
+
+        if (snakeX >= 340 || snakeX < 0 || snakeY >= 340 || snakeY < 10) // It will check if you are inside the map
+        {
+            isPlaying = false; // It is for your death
+        }
+
+        if (maxLength > 3 || direction != '-' && direction != 'w' && direction != 'a' && direction != 's' && direction 
+		!= 'd' && direction != 'W' && direction != 'A' && direction != 'S' && direction != 'D')
+        {
+            for (snakeLength = maxLength; snakeLength >= 0; snakeLength--)
+            {
+                if (snakeX == tailX[tailIndex] && snakeY == tailY[tailIndex])
+                {
+                    isPlaying = false; // It will check if your head hits your tail
+                }
+
+                tailIndex--;
+            }
+
+            tailIndex = maxTailIndex;
+        }
+    }
+
+    if (isPlaying == false)
+    {
+        cleardevice();
+        outtextxy(70, 170, "YOU LOST, YOUR ");
+        outtextxy(188, 170, playerScore);
+        getch();
+        getch();
+        return 0; // It is for game over
+    }
+}
+
+void startGame() // The function toexecute at the start of the game
+{
+    sprintf(playerScore, "SCORE : %d ", score);
+
+    srand(time(NULL));
+    initwindow(350, 354, "SnakeGame");
+
+    setcolor(GREEN);
+    setfillstyle(SOLID_FILL, GREEN);
+    rectangle(0, 0, 340, 10);
+    floodfill(5, 5, GREEN);
+
+    setcolor(WHITE);
+    outtextxy(10, 0, playerScore);
+
+    fruitX = rand() % 34;
+    fruitY = rand() % 34;
+    fruitY = fruitY * 10;
+    fruitX = fruitX * 10;
+
+    if (fruitY == 0)
+    {
+        fruitY = fruitY + 10;
+    }
+
+    setcolor(RED);
+    setfillstyle(SOLID_FILL, RED);
+    rectangle(fruitX, fruitY, fruitX + 10, fruitY + 10);
+    floodfill(fruitX + 5, fruitY + 5, RED);
+}
+
+void updateGame() // The function to execute every frame
+{
+    sprintf(playerScore, "SCORE : %d ", score);
+
+    delay(150);
+
+    tailX.push_back(snakeX);
+    tailY.push_back(snakeY);
+
+    generateFruit();
+
+    moveSnake();
+
+    renderGraphics();
+}
+
+void moveSnake() // The function to determine the snake movement
+{
+    if (kbhit())
+    {
+        direction = getch();
+    }
+
+    if (direction == 'w' && lastDirection == 's' || direction == 'W' && lastDirection == 'S')
+    {
+        direction = lastDirection;
+    }
+
+    if (direction == 'a' && lastDirection == 'd' || direction == 'A' && lastDirection == 'D')
+    {
+        direction = lastDirection;
+    }
+
+    if (direction == 's' && lastDirection == 'w' || direction == 'S' && lastDirection == 'W')
+    {
+        direction = lastDirection;
+    }
+
+    if (direction == 'd' and lastDirection == 'a' || direction == 'D' and lastDirection == 'A')
+    {
+        direction = lastDirection;
+    }
+
+    lastDirection = direction;
+
+    if (direction == 's' || direction == 'S')
+    {
+        snakeY = snakeY + 10;
+    }
+
+    if (direction == 'a' || direction == 'A')
+    {
+        snakeX = snakeX - 10;
+    }
+
+    if (direction == 'w' || direction == 'W')
+    {
+        snakeY = snakeY - 10;
+    }
+
+    if (direction == 'd' || direction == 'D')
+    {
+        snakeX = snakeX + 10;
+    }
+}
+
+void renderGraphics() // The function for the graphic
+{
+    cleardevice();
+
+    setcolor(GREEN);
+    setfillstyle(SOLID_FILL, GREEN);
+    rectangle(0, 0, 350, 10); // It is for green line
+    floodfill(5, 5, GREEN);
+
+    setcolor(WHITE);
+    outtextxy(10, 0, playerScore); // It is for score
+
+    setcolor(RED);
+    setfillstyle(SOLID_FILL, RED);
+    rectangle(fruitX, fruitY, fruitX + 10, fruitY + 10); // It is for fruit
+    floodfill(fruitX + 5, fruitY + 5, RED);
+
+    setcolor(WHITE);
+    setfillstyle(SOLID_FILL, WHITE);
+    rectangle(snakeX, snakeY, snakeX + 10, snakeY + 10); // It is forhead
+    floodfill(snakeX + 5, snakeY + 5, WHITE);
+
+    for (snakeLength = maxLength; snakeLength > 0; snakeLength--)
+    {
+        setcolor(WHITE);
+        setfillstyle(SOLID_FILL, WHITE);
+        rectangle(tailX[tailIndex], tailY[tailIndex], tailX[tailIndex] + 10, tailY[tailIndex] + 10); //It is for tail
+        floodfill(tailX[tailIndex] + 5, tailY[tailIndex] + 5, WHITE);
+        tailIndex--;
+    }
+
+    maxTailIndex++;
+    tailIndex = maxTailIndex;
+}
+
+void generateFruit() // The function for fruit 
+{
+    if (snakeX == fruitX && snakeY == fruitY)
+    {
+        hasEaten = true;
+    }
+
+    if (hasEaten == true)
+    {
+        hasEaten = false;
+        maxLength++;
+        score++;
+        snakeLength = maxLength;
+        fruitX = rand() % 34;
+        fruitY = rand() % 34;
+        fruitY = fruitY * 10;
+        fruitX = fruitX * 10; // It is for random location
+
+        for (snakeLength = maxLength; snakeLength >= 0; snakeLength--)
+        {
+            if (fruitX == tailX[tailIndex] && fruitY == tailY[tailIndex])
+            {
+                fruitX = rand() % 34;
+                fruitY = rand() % 34;
+                fruitY = fruitY * 10;
+                fruitX = fruitX * 10; // It will not spawn the fruit on the snake
+            }
+            tailIndex--;
+        }
+        if (fruitY == 0)
+        {
+            fruitY = 10;
+        }
+        tailIndex = maxTailIndex;
+        setcolor(RED);
+        setfillstyle(SOLID_FILL, RED);
+        rectangle(fruitX, fruitY, fruitX + 10, fruitY + 10); // It makes the fruit
+        floodfill(fruitX + 5, fruitX + 5, RED);
+    }
+}
