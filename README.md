@@ -1,14 +1,14 @@
-# C++ Snake game using GUI
+# 📚 C++ Snake game using GUI
 
 For my first semester programming project, I chose to delve into the timeless realm of game development by crafting a classic Snake game using C++. Drawing inspiration from the provided source file, I embarked on a journey to expand upon its foundation, aiming to create a polished and immersive gaming experience while honing my programming skills.
 
 
-**Project Vision:**
+## **Project Vision:**
 
 The Snake game, a staple of arcade gaming, offers a simple yet captivating gameplay concept: navigate a snake across a grid, consuming fruits to grow longer while avoiding collisions with obstacles. My project aimed to encapsulate the essence of this beloved game, infusing it with modern enhancements and features to elevate the gaming experience.
 
 
-**Enhancements and Challenges:**
+## **Enhancements and Challenges:**
 
 Building upon the provided source file presented a myriad of challenges and opportunities for growth:
 
@@ -21,6 +21,6 @@ Building upon the provided source file presented a myriad of challenges and oppo
 4. **Gameplay Expansion:** Beyond the core gameplay mechanics, I sought to enrich the gaming experience with additional features and content. This included implementing score tracking, level progression, power-ups, and customizable game settings, offering players a more dynamic and immersive journey through the Snake universe.
 
 
-**Conclusion:**
+## **Conclusion:**
 
 The development of the classic Snake game for my semester 1 final programming project was a transformative endeavor that encapsulated both the challenges and joys of game development. Through overcoming technical hurdles and refining gameplay mechanics, I honed my programming skills, gained invaluable insights into software engineering principles, and deepened my passion for game development. The project stands as a testament to my growth as a programmer and serves as a springboard for future explorations in the exciting world of game development.
